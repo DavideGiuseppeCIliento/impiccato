@@ -1,7 +1,7 @@
 // --- IMPORT COMPONENTS
 import LetterBox from "./LetterBox";
 
-export default function AlphabetGrid({ alphabet, setIdCharClicked }) {
+export default function AlphabetGrid({ alphabet, handleLetterClick }) {
   return (
     <div className="container pt-5">
       <div className="row d-flex justify-content-center g-2">
@@ -10,7 +10,8 @@ export default function AlphabetGrid({ alphabet, setIdCharClicked }) {
             key={letter.id}
             id={letter.id}
             char={letter.char}
-            setIdCharClicked={setIdCharClicked}
+            clicked={letter.clicked}
+            handleLetterClick={handleLetterClick}
           />
         ))}
       </div>

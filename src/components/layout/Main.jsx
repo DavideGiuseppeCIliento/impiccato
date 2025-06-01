@@ -14,8 +14,9 @@ import axios from "axios";
 const urlApi = "https://random-word-api.herokuapp.com/word";
 
 export default function Main() {
-  const [idCharClicked, setIdCharClicked] = useState("");
+  const [clickedChars, setClickedChars] = useState([]);
   const [secretWord, setSecretWord] = useState("");
+  const [alphabetState, setAlphabetState] = useState(alphabet);
 
   // # FUNCTION API REQUEST
   const apiRequest = () => {
@@ -31,7 +32,14 @@ export default function Main() {
       });
   };
 
-  console.log(idCharClicked);
+  // # FUNCTION CAMBIO CLICKED IN ALPHABET
+  const handleLetterClick = (id, char) => {
+    const updatedAlphabet = alphabetState.map((letter) =>
+      letter.id === id ? { ...letter, clicked: true } : letter
+    );
+    setAlphabetState(updatedAlphabet);
+    setClickedChars((prev) => [...prev, char]);
+  };
 
   //   ##CHIAMATA API - USE EFFECT
   useEffect(apiRequest, []);
@@ -39,8 +47,15 @@ export default function Main() {
   return (
     <>
       <Title />
-      <WordRight idCharClicked={idCharClicked} secretWord={secretWord} />
-      <AlphabetGrid alphabet={alphabet} setIdCharClicked={setIdCharClicked} />
+      <WordRight
+        clickedChars={clickedChars}
+        secretWord={secretWord}
+        alphabet={alphabetState}
+      />
+      <AlphabetGrid
+        alphabet={alphabetState}
+        handleLetterClick={handleLetterClick}
+      />
     </>
   );
 }
